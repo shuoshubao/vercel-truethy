@@ -4,6 +4,8 @@ const cors = require('@koa/cors');
 const { bodyParser } = require('@koa/bodyparser');
 
 const NpmStars = require('./api/npm/stars');
+const CompilerLess = require('./api/compiler/less');
+const CompilerSass = require('./api/compiler/sass');
 
 const app = new Koa();
 const router = new Router();
@@ -24,6 +26,8 @@ router.get('/api/demo', (ctx, next) => {
 });
 
 router.get('/api/npm/stars', NpmStars);
+router.post('/api/compiler/less', CompilerLess);
+router.post('/api/compiler/sass', CompilerSass);
 
 app.use(router.routes());
 
