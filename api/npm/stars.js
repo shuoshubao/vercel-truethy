@@ -6,12 +6,9 @@ module.exports = async (ctx, next) => {
 
   if (!user) {
     ctx.body = {
-      code: 0,
-      message: '',
-      data: {
-        user: '',
-        list: []
-      }
+      code: 1,
+      message: 'user is required',
+      data: []
     };
     return;
   }
@@ -21,9 +18,6 @@ module.exports = async (ctx, next) => {
   ctx.body = {
     code: 0,
     message: '',
-    data: {
-      user,
-      list: map(res.data.rows, 'value')
-    }
+    data: map(res.data.rows, 'value').sort()
   };
 };
