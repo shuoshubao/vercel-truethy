@@ -7,6 +7,10 @@ const router = new Router()
 
 app.use(cors())
 
+router.get('/', (ctx, next) => {
+  ctx.body = '<h1>hello</h1>'
+})
+
 router.get('/api/demo', (ctx, next) => {
   ctx.body = {
     code: 0,
