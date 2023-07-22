@@ -1,0 +1,7 @@
+[
+  "api/npm/stars",
+  "api/compiler/sass",
+  "api/compiler/less",
+  "api/compiler/esbuild",
+  "api/compiler/babel"
+]

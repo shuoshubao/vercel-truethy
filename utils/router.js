@@ -1,14 +1,11 @@
-const { resolve, relative } = require('path');
 const Router = require('@koa/router');
-const glob = require('glob');
-
-const cwd = process.cwd();
+const RouterConfig = require('./routerConfig.json');
 
 const router = new Router();
 
-const Routerfiles = glob.sync(resolve(cwd, 'api/**/*.js')).map(v => {
-  const url = relative(cwd, v).replace('.js', '');
-  const { method, middleware } = require(v);
+const Routerfiles = RouterConfig.map(v => {
+  const url = `/${v}`;
+  const { method, middleware } = require(`../${v}`);
   return {
     url,
     method,
@@ -23,7 +20,7 @@ router.get('/', (ctx, next) => {
 Routerfiles.forEach(v => {
   const { url, method, middleware } = v;
 
-  router[method](`/${url}`, middleware);
+  router[method](url, middleware);
 });
 
 module.exports = app => {
