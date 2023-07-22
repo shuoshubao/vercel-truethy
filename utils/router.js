@@ -6,15 +6,22 @@ const cwd = process.cwd();
 
 const router = new Router();
 
-const Routerfiles = glob.sync(resolve(cwd, 'api/**/*.js'));
+const Routerfiles = glob.sync(resolve(cwd, 'api/**/*.js')).map(v => {
+  const url = relative(cwd, v).replace('.js', '');
+  const { method, middleware } = require(v);
+  return {
+    url,
+    method,
+    middleware
+  };
+});
 
 router.get('/', (ctx, next) => {
   ctx.body = '<h1>hello, Vercel</h1>';
 });
 
 Routerfiles.forEach(v => {
-  const url = relative(cwd, v).replace('.js', '');
-  const { method, middleware } = require(v);
+  const { url, method, middleware } = v;
 
   router[method](`/${url}`, middleware);
 });
