@@ -10,7 +10,8 @@ esbuild.build({
     externalGlobalPlugin({
       react: 'window.React',
       'react-dom': 'window.ReactDOM',
-      antd: 'window.antd'
+      antd: 'window.antd',
+      lodash: 'window._',
     })
   ]
 });

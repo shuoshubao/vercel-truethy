@@ -1,6 +1,6 @@
 const Koa = require('koa');
 const cors = require('@koa/cors');
-const static = require('koa-static')
+const static = require('koa-static');
 const { bodyParser } = require('@koa/bodyparser');
 const initRouter = require('./utils/router');
 

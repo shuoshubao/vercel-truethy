@@ -35,6 +35,9 @@ router.get('/', async (ctx, next) => {
         src: 'https://unpkg.com/antd@5.7.1/dist/antd.min.js'
       },
       {
+        src: 'https://unpkg.com/lodash@4.17.21/lodash.min.js'
+      },
+      {
         text: `window.globalData = ${JSON.stringify({ RouterList })}`
       }
     ],
