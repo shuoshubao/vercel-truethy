@@ -23,6 +23,13 @@ router.get('/', (ctx, next) => {
   ctx.body = generateDocument({
     title: 'Vercel',
     style: ['https://unpkg.com/antd@4.24.12/dist/antd.min.css'],
+    link: [
+      {
+        href: 'https://assets.vercel.com/image/upload/front/favicon/vercel/32x32.png',
+        rel: 'icon',
+        type: 'image/png'
+      }
+    ],
     bodyHtml: `<div class="ant-card ant-card-bordered">
       <div class="ant-card-head">
         <div class="ant-card-head-wrapper">

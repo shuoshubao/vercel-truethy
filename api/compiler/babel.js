@@ -3,6 +3,7 @@ const { merge, pick, cloneDeep } = require('lodash');
 
 const defaultBabelConfig = {
   presets: [
+    '@babel/preset-react',
     [
       '@babel/preset-env',
       {
@@ -10,8 +11,7 @@ const defaultBabelConfig = {
           chrome: '200'
         }
       }
-    ],
-    '@babel/preset-react'
+    ]
   ]
 };
 
