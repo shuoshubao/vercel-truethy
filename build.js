@@ -3,13 +3,14 @@ const { externalGlobalPlugin } = require('esbuild-plugin-external-global');
 
 esbuild.build({
   entryPoints: ['src/index.jsx'],
-  outfile: '.vercel/output/index.js',
+  outfile: 'dist/index.js',
   bundle: true,
   minify: true,
   plugins: [
     externalGlobalPlugin({
       react: 'window.React',
-      'react-dom': 'window.ReactDOM'
+      'react-dom': 'window.ReactDOM',
+      antd: 'window.antd'
     })
   ]
 });
