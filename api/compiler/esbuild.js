@@ -7,7 +7,7 @@ module.exports = {
 
     const { code } = ctx.request.body;
 
-    const res = esbuild.transformSync(code, {
+    const res = await esbuild.transform(code, {
       loader: 'jsx'
     });
 
