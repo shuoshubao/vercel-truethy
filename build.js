@@ -3,7 +3,7 @@ const { externalGlobalPlugin } = require('esbuild-plugin-external-global');
 
 esbuild.build({
   entryPoints: ['src/index.jsx'],
-  outfile: 'dist/index.js',
+  outfile: '.vercel/output/static/index.js',
   bundle: true,
   minify: true,
   plugins: [
