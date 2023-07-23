@@ -1,9 +1,5 @@
 .DS_Store
 node_modules
 package-lock.json
-
-.vercel/cache
-.vercel/project.json
-.vercel/README.txt
-
+.vercel
 dist
