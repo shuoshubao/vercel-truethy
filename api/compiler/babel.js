@@ -1,4 +1,6 @@
 const babel = require('@babel/core');
+require('@babel/preset-env');
+require('@babel/preset-react');
 const { merge, pick, cloneDeep } = require('lodash');
 
 const defaultBabelConfig = {
