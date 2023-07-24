@@ -22,13 +22,10 @@ module.exports = {
   middleware: async (ctx, next) => {
     const timestap = Date.now();
 
-    const { code, config } = ctx.request.body;
+    const { code, config = defaultBabelConfig } = ctx.request.body;
 
     try {
-      const babelConfig = cloneDeep(defaultBabelConfig);
-      if (config) {
-        const babelConfig = merge({}, defaultBabelConfig, JSON.parse(config));
-      }
+      const babelConfig = merge({}, defaultBabelConfig, config);
 
       const res = babel.transformSync(code, babelConfig);
 
