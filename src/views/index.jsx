@@ -1,32 +1,36 @@
 import React from 'react';
-import { Card, List, Space, Tag, Typography } from 'antd';
+import { Card, Table, Tag } from 'antd';
 import { get } from 'lodash';
 
-const { Text } = Typography;
+const ColorsMap = {
+  GET: '#0f6ab4',
+  POST: '#10a54a',
+  PUT: '#c5862b',
+  DELETE: '#a41e22',
+  PATCH: '#D38042'
+};
 
-export default () => {
-  const RouterList = get(window, 'globalData.RouterList');
+const columns = [
+  {
+    title: 'Method',
+    dataIndex: 'method',
+    render(value) {
+      const Method = value.toUpperCase();
+      return <Tag color={ColorsMap[Method]}>{Method}</Tag>;
+    }
+  },
+  {
+    title: 'Url',
+    dataIndex: 'url'
+  }
+];
+
+export default props => {
+  const RouterList = props.RouterList ?? get(window, 'globalData.RouterList');
 
   return (
-    <List
-      header="API"
-      dataSource={RouterList}
-      renderItem={item => {
-        const { method, url } = item;
-        return (
-          <List.Item>
-            <Space style={{ display: 'flex' }}>
-              <div style={{ width: 60 }}>
-                <Tag color="green" style={{ margin: 0 }}>
-                  {method}
-                </Tag>
-              </div>
-              <Text>{url}</Text>
-            </Space>
-          </List.Item>
-        );
-      }}
-      style={{ padding: 24 }}
-    />
+    <Card title="API">
+      <Table rowKey="url" columns={columns} dataSource={RouterList} />
+    </Card>
   );
 };

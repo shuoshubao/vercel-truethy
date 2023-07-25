@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { hydrateRoot } from 'react-dom/client';
 import App from './views';
 
-createRoot(document.querySelector('#app')).render(<App />);
+hydrateRoot(document.querySelector('#app'), <App />);
