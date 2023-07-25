@@ -1,5 +1,6 @@
 [
   "api/npm/stars",
+  "api/npm/packages",
   "api/compiler/sass",
   "api/compiler/prettier",
   "api/compiler/less",
