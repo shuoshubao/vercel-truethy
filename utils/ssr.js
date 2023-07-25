@@ -2,6 +2,7 @@ const fs = require('fs');
 const babel = require('@babel/core');
 const React = require('react');
 const { renderToString } = require('react-dom/server');
+require('antd');
 
 const babelConfig = {
   presets: [
