@@ -9,6 +9,10 @@ const router = new Router();
 
 const cwd = process.cwd();
 
+console.log(11111);
+console.log(cwd);
+console.log(glob.sync('api/**/*.js'));
+
 const RouterList = glob.sync('api/**/*.js').map(v => {
   const url = `/${v.replace('.js', '')}`;
   const { method, middleware } = require(resolve(cwd, v));
