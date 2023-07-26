@@ -22,6 +22,7 @@ const manifest = require('esbuild-plugin-manifest');
       externalGlobalPlugin({
         react: 'window.React',
         'react-dom': 'window.ReactDOM',
+        dayjs: 'window.dayjs',
         antd: 'window.antd',
         lodash: 'window._'
       })

@@ -17,13 +17,13 @@ const RouterList = RouterConfig.map(v => {
 });
 
 router.get('/', async (ctx, next) => {
-  const ServerHtml = getServerHtml({ RouterList });
+  const { html: ServerHtml, css: ServerCss } = getServerHtml({ RouterList });
 
   const { index: IndexJs } = require('../dist/manifest.json');
 
   const html = generateDocument({
     title: 'Vercel',
-    style: ['https://unpkg.com/antd@4.24.12/dist/antd.min.css'],
+    style: ['https://unpkg.com/antd@5.7.1/dist/reset.css'],
     headScript: [
       {
         src: 'https://unpkg.com/react@18.2.0/umd/react.production.min.js'
@@ -32,10 +32,10 @@ router.get('/', async (ctx, next) => {
         src: 'https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js'
       },
       {
-        src: 'https://unpkg.com/moment@2.25.3/min/moment.min.js'
+        src: 'https://unpkg.com/dayjs@1.11.9/dayjs.min.js'
       },
       {
-        src: 'https://unpkg.com/antd@4.24.12/dist/antd.min.js'
+        src: 'https://unpkg.com/antd@5.7.1/dist/antd.min.js'
       },
       {
         src: 'https://unpkg.com/lodash@4.17.21/lodash.min.js'
@@ -56,7 +56,7 @@ router.get('/', async (ctx, next) => {
         type: 'image/png'
       }
     ],
-    bodyHtml: [`<div id="app">${ServerHtml}</div>`]
+    bodyHtml: [ServerCss, `<div id="app">${ServerHtml}</div>`]
   });
 
   ctx.body = await prettier.format(html, {
