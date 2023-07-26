@@ -46,7 +46,7 @@ router.get('/', async (ctx, next) => {
     ],
     script: [
       {
-        src: isDev ? 'http://localhost:3000/index.js' : 'https://truethy.vercel.app/index.js'
+        src: isDev ? 'http://localhost:3000/index.js' : 'https://truethy.vercel.app/1690333449731.js'
       }
     ],
     link: [
