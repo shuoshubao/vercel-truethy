@@ -16,10 +16,10 @@ const RouterList = RouterConfig.map(v => {
   };
 });
 
-const isDev = process.env.npm_command === 'start';
-
 router.get('/', async (ctx, next) => {
   const ServerHtml = getServerHtml({ RouterList });
+
+  const { index: IndexJs } = require('../dist/manifest.json');
 
   const html = generateDocument({
     title: 'Vercel',
@@ -46,7 +46,7 @@ router.get('/', async (ctx, next) => {
     ],
     script: [
       {
-        src: isDev ? 'http://localhost:3000/index.js' : 'https://truethy.vercel.app/1690333449731.js'
+        src: IndexJs
       }
     ],
     link: [

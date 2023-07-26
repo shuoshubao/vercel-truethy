@@ -8,6 +8,7 @@
   },
   "author": "",
   "license": "ISC",
+  "port": "3000",
   "dependencies": {
     "@babel/core": "^7.22.9",
     "@babel/preset-env": "^7.22.9",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@vercel/node": "^2.15.6",
-    "esbuild-plugin-external-global": "^1.0.1"
+    "esbuild-plugin-external-global": "^1.0.1",
+    "esbuild-plugin-manifest": "^0.6.0"
   }
 }
