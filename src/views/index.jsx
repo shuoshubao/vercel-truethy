@@ -7,7 +7,8 @@ const ColorsMap = {
   POST: '#10a54a',
   PUT: '#c5862b',
   DELETE: '#a41e22',
-  PATCH: '#D38042'
+  PATCH: '#d38042',
+  HEAD: '#ffd20f'
 };
 
 const columns = [
