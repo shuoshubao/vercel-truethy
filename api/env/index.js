@@ -1,6 +1,8 @@
+const glob = require('glob');
+
 module.exports = {
   method: 'get',
-  middleware: async (ctx, next) => {
+  middleware: (ctx, next) => {
     const timestap = Date.now();
 
     ctx.body = {
@@ -9,7 +11,8 @@ module.exports = {
       time: Date.now() - timestap,
       data: {
         cwd: process.cwd(),
-        env: process.env
+        env: process.env,
+        filse: Array.from(new Set([glob.sync('*'), glob.sync('*/*.*'), glob.sync('*/*')].flat())).sort()
       }
     };
   }
