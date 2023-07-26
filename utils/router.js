@@ -1,21 +1,14 @@
 const Router = require('@koa/router');
-const glob = require('glob');
-const { resolve } = require('path');
 const { generateDocument } = require('@nbfe/js2html');
 const prettier = require('prettier');
 const getServerHtml = require('./ssr');
+const RouterConfig = require('./routerConfig.json');
 
 const router = new Router();
 
-const cwd = process.cwd();
-
-console.log(11111);
-console.log(cwd);
-console.log(glob.sync('api/**/*.js'));
-
-const RouterList = glob.sync('api/**/*.js').map(v => {
-  const url = `/${v.replace('.js', '')}`;
-  const { method, middleware } = require(resolve(cwd, v));
+const RouterList = RouterConfig.map(v => {
+  const url = `/${v}`;
+  const { method, middleware } = require(`../${v}`);
   return {
     url,
     method,
