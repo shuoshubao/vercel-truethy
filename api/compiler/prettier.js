@@ -24,9 +24,7 @@ module.exports = {
       code: {
         type: 'string',
         description: '代码',
-        examples: [
-          '@my-ruleset: { .my-selector { @media tv { background-color: black; } } }; @media (orientation:portrait) { @my-ruleset(); }'
-        ]
+        examples: ['@my-ruleset: { .my-selector { @media tv { background-color: black; } } }; @media (orientation:portrait) { @my-ruleset(); }']
       },
       config: {
         type: 'object',

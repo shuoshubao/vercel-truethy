@@ -3,6 +3,8 @@ const esbuild = require('esbuild');
 const { externalGlobalPlugin } = require('esbuild-plugin-external-global');
 const manifest = require('esbuild-plugin-manifest');
 
+const PUBLIC_PATH = 'https://truethy.vercel.app/';
+
 esbuild.build({
   entryPoints: ['src/index.jsx'],
   entryNames: '[name]-[hash]',
@@ -16,7 +18,7 @@ esbuild.build({
         return Object.entries(entries).reduce((prev, [k, v]) => {
           prev[path.parse(k).name] = `https://truethy.vercel.app/${v}`;
           return prev;
-        }, {});
+        }, { publicPath: PUBLIC_PATH });
       }
     }),
     externalGlobalPlugin({

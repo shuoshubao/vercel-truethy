@@ -8,4 +8,4 @@ const Routerfiles = glob.sync(resolve(cwd, 'api/**/*.js')).map(v => {
   return relative(cwd, v).replace('.js', '');
 });
 
-writeFileSync('utils/routerConfig.json', JSON.stringify(Routerfiles) + '\n');
+writeFileSync('dist/routerConfig.json', JSON.stringify(Routerfiles) + '\n');

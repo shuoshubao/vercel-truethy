@@ -1,4 +1,6 @@
-import { Card, ConfigProvider, Table, Tag } from 'antd';
+import { message, Modal, Button, Card, ConfigProvider, Table, Tag, Tooltip } from 'antd';
+import { CopyOutlined } from '@ant-design/icons';
+import copy from 'copy-to-clipboard';
 import { get } from 'lodash';
 import React from 'react';
 
@@ -36,72 +38,78 @@ const columns = [
   {
     title: 'Args',
     dataIndex: 'args',
+    width: 100,
     render(value) {
-      const { type, properties } = value;
-      if (type === 'object') {
-        Object.entries(properties).forEach(([key, value]) => {
-          delete properties[key].examples;
-        });
-        return (
-          <pre style={{ margin: 0 }}>
-            <code>{JSON.stringify(properties, ' ', 2)}</code>
-          </pre>
-        );
+      if (!value) {
+        return '-';
       }
-      return '-';
+      return (
+        <Button
+          type="link"
+          onClick={() => {
+            Modal.info({
+              title: 'Args',
+              width: '50vw',
+              closable: true,
+              content: (
+                <pre style={{ padding: 12, background: '#f9fafb', borderRadius: 4 }}>
+                  <code>{JSON.stringify(value, null, 2)}</code>
+                </pre>
+              )
+            });
+          }}
+        >
+          查看
+        </Button>
+      );
     }
   },
   {
     title: 'Example',
-    dataIndex: 'args',
-    render(value, record) {
-      const { method, url } = record;
-      const { type, examples } = value;
-      if (type === 'object') {
-        const [example] = examples;
-        let fetchCode = '';
-        if (method === 'get') {
-          fetchCode = `
-            fetch('${url}?${new URLSearchParams(example)}')
-          `;
-        } else {
-          fetchCode = `
-            fetch('${url}', {
-              method: '${method.toUpperCase()}',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: '${JSON.stringify(example)}'
-            })
-          `;
-        }
-        return (
-          <pre style={{ margin: 0 }}>
-            <code>{fetchCode.trim()}</code>
-          </pre>
-        );
-      }
-      if (method === 'get') {
-        return `fetch('${url}')`;
-      }
-      return `fetch('${url}', {
-        method: '${method.toUpperCase()}',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })`;
+    dataIndex: 'example',
+    width: 100,
+    render(value) {
+      return (
+        <Button
+          type="link"
+          onClick={() => {
+            Modal.info({
+              title: 'Example',
+              width: '90vw',
+              closable: true,
+              content: (
+                <pre style={{ padding: 12, background: '#f9fafb', borderRadius: 4 }}>
+                  <code>{value}</code>
+                </pre>
+              )
+            });
+          }}
+        >
+          查看
+        </Button>
+      );
     }
   }
 ];
 
 export default props => {
-  const RouterList = props.RouterList ?? get(window, 'globalData.RouterList');
+  const { PUBLIC_PATH, RouterList } = Object.keys(props).length ? props : get(window, 'globalData');
 
   return (
     <ConfigProvider componentSize="small">
-      <Card title="API">
+      <Card
+        title="API"
+        extra={
+          <Tooltip title="api url prefix">
+            <CopyOutlined
+              onClick={() => {
+                copy(PUBLIC_PATH);
+                message.success(['复制成功', PUBLIC_PATH].join(':'));
+              }}
+            />
+          </Tooltip>
+        }
+      >
         <Table rowKey="url" columns={columns} dataSource={RouterList} />
       </Card>
     </ConfigProvider>

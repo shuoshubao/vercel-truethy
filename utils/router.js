@@ -1,27 +1,83 @@
 const Router = require('@koa/router');
 const { generateDocument } = require('@nbfe/js2html');
 const prettier = require('prettier');
+const { cloneDeep } = require('lodash');
 const getServerHtml = require('./ssr');
-const RouterConfig = require('./routerConfig.json');
+const { publicPath: PUBLIC_PATH, index: IndexJs } = require('../dist/manifest.json');
+const RouterConfig = require('../dist/routerConfig.json');
 
 const router = new Router();
 
+const renderArgs = args => {
+  const { type, properties } = cloneDeep(args);
+  if (type === 'object') {
+    Object.entries(properties).forEach(([key, value]) => {
+      delete properties[key].examples;
+    });
+    return properties;
+  }
+  return null;
+};
+
+const renderExample = record => {
+  const { method, url, args } = record;
+  const { type, examples } = args;
+  let fetchCode = '';
+  if (type === 'object') {
+    const [example] = examples;
+    if (method === 'get') {
+      fetchCode = `fetch(\`${url}?\${new URLSearchParams(${JSON.stringify(example)})}\`)`;
+    } else {
+      fetchCode = `
+        fetch('${url}', {
+          method: '${method.toUpperCase()}',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(${JSON.stringify(example)})
+        })
+      `;
+    }
+  } else {
+    if (method === 'get') {
+      return `fetch('${url}')`;
+    }
+    return `fetch('${url}', {
+        method: '${method.toUpperCase()}',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })`;
+  }
+  return prettier.format(fetchCode, {
+    parser: 'babel',
+    printWidth: 160,
+    semi: false,
+    singleQuote: true
+  });
+};
+
 const RouterList = RouterConfig.map(v => {
   const url = `/${v}`;
-  const { method, description, args, middleware } = require(`../${v}`);
+  const item = require(`../${v}`);
+  const { method, description, args, middleware } = item;
   return {
     url,
     method,
     description,
-    args,
+    args: renderArgs(args),
+    example: renderExample({
+      ...item,
+      url
+    }),
     middleware
   };
 });
 
 router.get('/', async (ctx, next) => {
-  const ServerHtml = getServerHtml({ RouterList });
-
-  const { index: IndexJs } = require('../dist/manifest.json');
+  const ServerHtml = getServerHtml({ RouterList, PUBLIC_PATH });
 
   const html = generateDocument({
     title: 'Vercel',
@@ -43,7 +99,7 @@ router.get('/', async (ctx, next) => {
         src: 'https://unpkg.com/lodash@4.17.21/lodash.min.js'
       },
       {
-        text: `window.globalData = ${JSON.stringify({ RouterList })}`
+        text: `window.globalData = ${JSON.stringify({ RouterList, PUBLIC_PATH })}`
       }
     ],
     script: [

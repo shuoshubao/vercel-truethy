@@ -2,6 +2,9 @@ const path = require('path');
 const esbuild = require('esbuild');
 const { externalGlobalPlugin } = require('esbuild-plugin-external-global');
 const manifest = require('esbuild-plugin-manifest');
+const {port} = require('../package.json');
+
+const PUBLIC_PATH = `http://localhost:${port}/`;
 
 (async () => {
   const ctx = await esbuild.context({
@@ -13,10 +16,13 @@ const manifest = require('esbuild-plugin-manifest');
         hash: false,
         shortNames: true,
         generate(entries) {
-          return Object.entries(entries).reduce((prev, [k, v]) => {
-            prev[path.parse(k).name] = `http://localhost:3000/${v}`;
-            return prev;
-          }, {});
+          return Object.entries(entries).reduce(
+            (prev, [k, v]) => {
+              prev[path.parse(k).name] = `http://localhost:3000/${v}`;
+              return prev;
+            },
+            { publicPath: PUBLIC_PATH }
+          );
         }
       }),
       externalGlobalPlugin({
