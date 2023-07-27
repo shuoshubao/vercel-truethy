@@ -3,6 +3,18 @@ const { map } = require('lodash');
 
 module.exports = {
   method: 'get',
+  description: ' 获取用户收藏的npm包',
+  args: {
+    type: 'object',
+    properties: {
+      packages: {
+        type: 'string',
+        description: '用户名',
+        examples: ['shuoshubao']
+      }
+    },
+    required: ['user']
+  },
   middleware: async (ctx, next) => {
     const timestap = Date.now();
 

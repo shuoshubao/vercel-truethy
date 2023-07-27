@@ -15,7 +15,31 @@ const fetchPackage = async (name, keys = []) => {
 
 module.exports = {
   method: 'post',
-  middleware: async (ctx, next) => {
+  description: '批量获取 npm 包信息',
+  args: {
+    type: 'object',
+    properties: {
+      packages: {
+        type: 'string',
+        description: '用户名',
+        examples: ['shuoshubao']
+      },
+      keys: {
+        type: 'array',
+        description: '需要返回的字段',
+        examples: [
+          ['readme', 'users'],
+          ['description', 'dist-tags.latest']
+        ],
+        items: {
+          type: 'string'
+        }
+      }
+    },
+    required: ['packages'],
+    additionalProperties: false
+  },
+  middleware: async ctx => {
     const timestap = Date.now();
 
     const { packages, keys } = ctx.request.body;

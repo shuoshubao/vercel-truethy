@@ -8,10 +8,12 @@ const router = new Router();
 
 const RouterList = RouterConfig.map(v => {
   const url = `/${v}`;
-  const { method, middleware } = require(`../${v}`);
+  const { method, description, args, middleware } = require(`../${v}`);
   return {
     url,
     method,
+    description,
+    args,
     middleware
   };
 });
@@ -59,7 +61,7 @@ router.get('/', async (ctx, next) => {
     bodyHtml: [`<div id="app">${ServerHtml}</div>`]
   });
 
-  ctx.body = await prettier.format(html, {
+  ctx.body = prettier.format(html, {
     parser: 'html',
     printWidth: 160
   });

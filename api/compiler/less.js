@@ -2,7 +2,20 @@ const less = require('less');
 
 module.exports = {
   method: 'post',
-  middleware: async (ctx, next) => {
+  description: 'less 编译',
+  args: {
+    type: 'object',
+    properties: {
+      code: {
+        type: 'string',
+        description: 'less 代码',
+        examples: ['body {a: {color: red;}}}}']
+      }
+    },
+    required: ['code'],
+    additionalProperties: false
+  },
+  middleware: async ctx => {
     const timestap = Date.now();
 
     const { code } = ctx.request.body;

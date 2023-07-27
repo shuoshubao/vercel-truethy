@@ -1,6 +1,6 @@
-import React from 'react';
-import { Card, Table, Tag } from 'antd';
+import { Card, ConfigProvider, Table, Tag } from 'antd';
 import { get } from 'lodash';
+import React from 'react';
 
 const ColorsMap = {
   GET: '#0f6ab4',
@@ -15,14 +15,41 @@ const columns = [
   {
     title: 'Method',
     dataIndex: 'method',
+    width: 70,
     render(value) {
       const Method = value.toUpperCase();
-      return <Tag color={ColorsMap[Method]}>{Method}</Tag>;
+      return (
+        <Tag style={{ margin: 0 }} color={ColorsMap[Method]}>
+          {Method}
+        </Tag>
+      );
     }
   },
   {
     title: 'Url',
     dataIndex: 'url'
+  },
+  {
+    title: 'Description',
+    dataIndex: 'description'
+  },
+  {
+    title: 'Args',
+    dataIndex: 'args',
+    render(value) {
+      const { type, properties } = value || {};
+      if (type === 'object') {
+        Object.entries(properties).forEach(([key, value]) => {
+          delete properties[key].examples;
+        });
+        return (
+          <pre style={{ margin: 0 }}>
+            <code>{JSON.stringify(properties, ' ', 2)}</code>
+          </pre>
+        );
+      }
+      return '-';
+    }
   }
 ];
 
@@ -30,8 +57,10 @@ export default props => {
   const RouterList = props.RouterList ?? get(window, 'globalData.RouterList');
 
   return (
-    <Card title="API">
-      <Table rowKey="url" columns={columns} dataSource={RouterList} />
-    </Card>
+    <ConfigProvider componentSize="small">
+      <Card title="API">
+        <Table rowKey="url" columns={columns} dataSource={RouterList} />
+      </Card>
+    </ConfigProvider>
   );
 };

@@ -89,9 +89,9 @@
   var import_client = __toESM(require_client());
 
   // src/views/index.jsx
-  var import_react = __toESM(require_react());
   var import_antd = __toESM(require_antd());
   var import_lodash = __toESM(require_lodash());
+  var import_react = __toESM(require_react());
   var ColorsMap = {
     GET: "#0f6ab4",
     POST: "#10a54a",
@@ -104,19 +104,38 @@
     {
       title: "Method",
       dataIndex: "method",
+      width: 70,
       render(value) {
         const Method = value.toUpperCase();
-        return /* @__PURE__ */ import_react.default.createElement(import_antd.Tag, { color: ColorsMap[Method] }, Method);
+        return /* @__PURE__ */ import_react.default.createElement(import_antd.Tag, { style: { margin: 0 }, color: ColorsMap[Method] }, Method);
       }
     },
     {
       title: "Url",
       dataIndex: "url"
+    },
+    {
+      title: "Description",
+      dataIndex: "description"
+    },
+    {
+      title: "Args",
+      dataIndex: "args",
+      render(value) {
+        const { type, properties } = value || {};
+        if (type === "object") {
+          Object.entries(properties).forEach(([key, value2]) => {
+            delete properties[key].examples;
+          });
+          return /* @__PURE__ */ import_react.default.createElement("pre", { style: { margin: 0 } }, /* @__PURE__ */ import_react.default.createElement("code", null, JSON.stringify(properties, " ", 2)));
+        }
+        return "-";
+      }
     }
   ];
   var views_default = (props) => {
     const RouterList = props.RouterList ?? (0, import_lodash.get)(window, "globalData.RouterList");
-    return /* @__PURE__ */ import_react.default.createElement(import_antd.Card, { title: "API" }, /* @__PURE__ */ import_react.default.createElement(import_antd.Table, { rowKey: "url", columns, dataSource: RouterList }));
+    return /* @__PURE__ */ import_react.default.createElement(import_antd.ConfigProvider, { componentSize: "small" }, /* @__PURE__ */ import_react.default.createElement(import_antd.Card, { title: "API" }, /* @__PURE__ */ import_react.default.createElement(import_antd.Table, { rowKey: "url", columns, dataSource: RouterList })));
   };
 
   // src/index.jsx

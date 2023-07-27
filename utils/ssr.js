@@ -23,7 +23,7 @@ module.exports = props => {
 
   const { code } = babel.transformSync(input, babelConfig);
 
-  eval(code.replaceAll('exports.default', 'var App').replaceAll('"use strict";', ''));
+  eval(code.replaceAll('exports.default', 'global.App'));
 
   return renderToString(React.createElement(App, props));
 };

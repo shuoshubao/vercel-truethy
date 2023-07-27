@@ -19,7 +19,39 @@ const defaultBabelConfig = {
 
 module.exports = {
   method: 'post',
-  middleware: async (ctx, next) => {
+  description: 'babel 编译',
+  args: {
+    type: 'object',
+    properties: {
+      code: {
+        type: 'string',
+        description: 'js 代码',
+        examples: ['const App = () => {\nreturn <div>hello world</div>;\n};']
+      },
+      config: {
+        type: 'object',
+        description: 'babel 配置',
+        examples: [
+          {
+            presets: [
+              '@babel/preset-react',
+              [
+                '@babel/preset-env',
+                {
+                  targets: {
+                    chrome: '60'
+                  }
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    required: ['code'],
+    additionalProperties: false
+  },
+  middleware: async ctx => {
     const timestap = Date.now();
 
     const { code, config = defaultBabelConfig } = ctx.request.body;

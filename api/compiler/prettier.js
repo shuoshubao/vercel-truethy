@@ -14,9 +14,34 @@ const defaultPrettierConfig = {
   bracketSpacing: true, // { a }
   htmlWhitespaceSensitivity: 'ignore'
 };
+
 module.exports = {
   method: 'post',
-  middleware: async (ctx, next) => {
+  description: 'prettier 格式化',
+  args: {
+    type: 'object',
+    properties: {
+      code: {
+        type: 'string',
+        description: '代码',
+        examples: [
+          '@my-ruleset: { .my-selector { @media tv { background-color: black; } } }; @media (orientation:portrait) { @my-ruleset(); }'
+        ]
+      },
+      config: {
+        type: 'object',
+        description: 'pretier 配置',
+        examples: [
+          {
+            parser: 'less'
+          }
+        ]
+      }
+    },
+    required: ['code'],
+    additionalProperties: false
+  },
+  middleware: async ctx => {
     const timestap = Date.now();
 
     const { code, config = defaultPrettierConfig } = ctx.request.body;
@@ -31,7 +56,8 @@ module.exports = {
         message: '',
         time: Date.now() - timestap,
         data: {
-          code: res
+          code: res,
+          version: prettier.version
         }
       };
     } catch (e) {

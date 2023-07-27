@@ -2,7 +2,20 @@ const sass = require('sass');
 
 module.exports = {
   method: 'post',
-  middleware: async (ctx, next) => {
+  description: 'sass 编译',
+  args: {
+    type: 'object',
+    properties: {
+      code: {
+        type: 'string',
+        description: 'sass 代码',
+        examples: ['body {a: {color: red;}}}}']
+      }
+    },
+    required: ['code'],
+    additionalProperties: false
+  },
+  middleware: async ctx => {
     const timestap = Date.now();
 
     const { code } = ctx.request.body;
