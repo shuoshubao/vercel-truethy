@@ -22,6 +22,7 @@ esbuild.build({
     externalGlobalPlugin({
       react: 'window.React',
       'react-dom': 'window.ReactDOM',
+      moment: 'window.moment',
       antd: 'window.antd',
       lodash: 'window._'
     })
