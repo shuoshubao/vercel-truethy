@@ -1,8 +1,7 @@
 const Router = require('@koa/router');
 const { generateDocument } = require('@nbfe/js2html');
-const prettier = require('prettier');
-const getServerHtml = require('./ssr');
 const RouterConfig = require('./routerConfig.json');
+const SsrData = require('./ssr.json');
 
 const router = new Router();
 
@@ -17,7 +16,7 @@ const RouterList = RouterConfig.map(v => {
 });
 
 router.get('/', async (ctx, next) => {
-  const { html: ServerHtml, css: ServerCss } = getServerHtml({ RouterList });
+  const { html: ServerHtml, css: ServerCss } = SsrData;
 
   const { index: IndexJs } = require('../dist/manifest.json');
 
@@ -59,10 +58,7 @@ router.get('/', async (ctx, next) => {
     bodyHtml: [ServerCss, `<div id="app">${ServerHtml}</div>`]
   });
 
-  ctx.body = await prettier.format(html, {
-    parser: 'html',
-    printWidth: 160
-  });
+  ctx.body = html;
 });
 
 RouterList.forEach(v => {
