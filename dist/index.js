@@ -122,7 +122,7 @@
       title: "Args",
       dataIndex: "args",
       render(value) {
-        const { type, properties } = value || {};
+        const { type, properties } = value;
         if (type === "object") {
           Object.entries(properties).forEach(([key, value2]) => {
             delete properties[key].examples;
@@ -130,6 +130,45 @@
           return /* @__PURE__ */ import_react.default.createElement("pre", { style: { margin: 0 } }, /* @__PURE__ */ import_react.default.createElement("code", null, JSON.stringify(properties, " ", 2)));
         }
         return "-";
+      }
+    },
+    {
+      title: "Example",
+      dataIndex: "args",
+      render(value, record) {
+        const { method, url } = record;
+        const { type, examples } = value;
+        if (type === "object") {
+          const [example] = examples;
+          let fetchCode = "";
+          if (method === "get") {
+            fetchCode = `
+            fetch('${url}?${new URLSearchParams(example)}')
+          `;
+          } else {
+            fetchCode = `
+            fetch('${url}', {
+              method: '${method.toUpperCase()}',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: '${JSON.stringify(example)}'
+            })
+          `;
+          }
+          return /* @__PURE__ */ import_react.default.createElement("pre", { style: { margin: 0 } }, /* @__PURE__ */ import_react.default.createElement("code", null, fetchCode.trim()));
+        }
+        if (method === "get") {
+          return `fetch('${url}')`;
+        }
+        return `fetch('${url}', {
+        method: '${method.toUpperCase()}',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })`;
       }
     }
   ];

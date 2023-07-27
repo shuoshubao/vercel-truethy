@@ -37,7 +37,7 @@ const columns = [
     title: 'Args',
     dataIndex: 'args',
     render(value) {
-      const { type, properties } = value || {};
+      const { type, properties } = value;
       if (type === 'object') {
         Object.entries(properties).forEach(([key, value]) => {
           delete properties[key].examples;
@@ -49,6 +49,49 @@ const columns = [
         );
       }
       return '-';
+    }
+  },
+  {
+    title: 'Example',
+    dataIndex: 'args',
+    render(value, record) {
+      const { method, url } = record;
+      const { type, examples } = value;
+      if (type === 'object') {
+        const [example] = examples;
+        let fetchCode = '';
+        if (method === 'get') {
+          fetchCode = `
+            fetch('${url}?${new URLSearchParams(example)}')
+          `;
+        } else {
+          fetchCode = `
+            fetch('${url}', {
+              method: '${method.toUpperCase()}',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: '${JSON.stringify(example)}'
+            })
+          `;
+        }
+        return (
+          <pre style={{ margin: 0 }}>
+            <code>{fetchCode.trim()}</code>
+          </pre>
+        );
+      }
+      if (method === 'get') {
+        return `fetch('${url}')`;
+      }
+      return `fetch('${url}', {
+        method: '${method.toUpperCase()}',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })`;
     }
   }
 ];
