@@ -21,15 +21,15 @@ module.exports = {
     properties: {
       packages: {
         type: 'string',
-        description: '用户名',
-        examples: ['shuoshubao']
+        description: '包名',
+        examples: ['koa', 'express']
       },
       keys: {
         type: 'array',
         description: '需要返回的字段',
         examples: [
-          ['readme', 'users'],
-          ['description', 'dist-tags.latest']
+          ['description', 'dist-tags.latest'],
+          ['readme', 'users']
         ],
         items: {
           type: 'string'
@@ -37,7 +37,8 @@ module.exports = {
       }
     },
     required: ['packages'],
-    additionalProperties: false
+    additionalProperties: false,
+    examples: [{ packages: ['koa', 'express'], keys: ['description', 'dist-tags.latest'] }]
   },
   middleware: async ctx => {
     const timestap = Date.now();

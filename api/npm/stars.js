@@ -13,7 +13,12 @@ module.exports = {
         examples: ['shuoshubao']
       }
     },
-    required: ['user']
+    required: ['user'],
+    examples: [
+      {
+        user: 'shuoshubao'
+      }
+    ]
   },
   middleware: async (ctx, next) => {
     const timestap = Date.now();

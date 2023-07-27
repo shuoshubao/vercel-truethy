@@ -1,7 +1,9 @@
 module.exports = {
   method: 'get',
   description: '获取环境变量',
-  args: { type: 'null' },
+  args: {
+    type: 'null'
+  },
   middleware: ctx => {
     const timestap = Date.now();
     ctx.body = {

@@ -49,7 +49,12 @@ module.exports = {
       }
     },
     required: ['code'],
-    additionalProperties: false
+    additionalProperties: false,
+    examples: [
+      {
+        code: 'const App = () => {\nreturn <div>hello world</div>;\n};'
+      }
+    ]
   },
   middleware: async ctx => {
     const timestap = Date.now();

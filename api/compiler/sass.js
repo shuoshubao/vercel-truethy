@@ -13,7 +13,12 @@ module.exports = {
       }
     },
     required: ['code'],
-    additionalProperties: false
+    additionalProperties: false,
+    examples: [
+      {
+        code: 'body {a: {color: red;}}}}'
+      }
+    ]
   },
   middleware: async ctx => {
     const timestap = Date.now();

@@ -39,7 +39,15 @@ module.exports = {
       }
     },
     required: ['code'],
-    additionalProperties: false
+    additionalProperties: false,
+    examples: [
+      {
+        code: '@my-ruleset: { .my-selector { @media tv { background-color: black; } } }; @media (orientation:portrait) { @my-ruleset(); }',
+        config: {
+          parser: 'less'
+        }
+      }
+    ]
   },
   middleware: async ctx => {
     const timestap = Date.now();
