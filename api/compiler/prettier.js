@@ -49,7 +49,7 @@ module.exports = {
     try {
       const prettierConfig = merge({}, defaultPrettierConfig, config);
 
-      const res = await prettier.format(code, prettierConfig);
+      const res = prettier.format(code, prettierConfig);
 
       ctx.body = {
         code: 0,
