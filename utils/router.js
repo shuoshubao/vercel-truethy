@@ -4,7 +4,7 @@ const prettier = require('prettier');
 const { cloneDeep } = require('lodash');
 const getServerHtml = require('./ssr');
 const { publicPath: PUBLIC_PATH, index: IndexJs } = require('../dist/manifest.json');
-const RouterConfig = require('../dist/routerConfig.json');
+const RouterFiles = require('../dist/routerConfig.json');
 
 const router = new Router();
 
@@ -59,7 +59,7 @@ const renderExample = record => {
   });
 };
 
-const RouterList = RouterConfig.map(v => {
+const RouterList = RouterFiles.map(v => {
   const url = `/${v}`;
   const item = require(`../${v}`);
   const { method, description, args, middleware } = item;

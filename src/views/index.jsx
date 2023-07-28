@@ -1,8 +1,7 @@
-import { message, Modal, Button, Card, ConfigProvider, Table, Tag, Tooltip } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
+import { Button, Card, ConfigProvider, Modal, Table, Tag, Tooltip, message } from 'antd';
 import copy from 'copy-to-clipboard';
-import { get } from 'lodash';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const ColorsMap = {
   GET: '#0f6ab4',
@@ -92,24 +91,31 @@ const columns = [
   }
 ];
 
-export default props => {
-  const { PUBLIC_PATH, RouterList } = Object.keys(props).length ? props : get(window, 'globalData');
+export default () => {
+  const [loading, setLoading] = useState(true);
+  const [publicPath, setPublicPath] = useState('');
+  const [RouterList, setRouterList] = useState([]);
+
+  useEffect(() => {
+    setPublicPath(window.globalData.PUBLIC_PATH);
+    setRouterList(window.globalData.RouterList);
+    setLoading(false);
+  }, []);
+
+  const extraNode = (
+    <Tooltip title="api url prefix">
+      <CopyOutlined
+        onClick={() => {
+          copy(publicPath);
+          message.success(['复制成功', publicPath].join(':'));
+        }}
+      />
+    </Tooltip>
+  );
 
   return (
     <ConfigProvider componentSize="small">
-      <Card
-        title="API"
-        extra={
-          <Tooltip title="api url prefix">
-            <CopyOutlined
-              onClick={() => {
-                copy(PUBLIC_PATH);
-                message.success(['复制成功', PUBLIC_PATH].join(':'));
-              }}
-            />
-          </Tooltip>
-        }
-      >
+      <Card title="API" extra={!loading && extraNode} loading={loading}>
         <Table rowKey="url" columns={columns} dataSource={RouterList} />
       </Card>
     </ConfigProvider>
