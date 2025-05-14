@@ -1,7 +1,7 @@
 import { CopyOutlined } from '@ant-design/icons';
 import { Button, Card, ConfigProvider, Modal, Table, Tag, Tooltip, message } from 'antd';
 import copy from 'copy-to-clipboard';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ColorsMap = {
   GET: '#0f6ab4',
@@ -40,7 +40,7 @@ const columns = [
     width: 100,
     render(value) {
       if (!value) {
-        return '-';
+        return <Button type="link">-</Button>;
       }
       return (
         <Button
