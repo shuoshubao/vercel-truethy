@@ -2,6 +2,7 @@ const path = require('path');
 const esbuild = require('esbuild');
 const { externalGlobalPlugin } = require('esbuild-plugin-external-global');
 const manifest = require('esbuild-plugin-manifest');
+require('./router');
 
 const PUBLIC_PATH = 'https://truethy.vercel.app/';
 
@@ -15,10 +16,13 @@ esbuild.build({
     manifest({
       shortNames: true,
       generate(entries) {
-        return Object.entries(entries).reduce((prev, [k, v]) => {
-          prev[path.parse(k).name] = `https://truethy.vercel.app/${v}`;
-          return prev;
-        }, { publicPath: PUBLIC_PATH });
+        return Object.entries(entries).reduce(
+          (prev, [k, v]) => {
+            prev[path.parse(k).name] = `https://truethy.vercel.app/${v}`;
+            return prev;
+          },
+          { publicPath: PUBLIC_PATH }
+        );
       }
     }),
     externalGlobalPlugin({

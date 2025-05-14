@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon .",
-    "dev": "node scripts/router && node scripts/dev",
-    "build": "node scripts/router && node scripts/build"
+    "dev": "node scripts/dev",
+    "build": "node scripts/build"
   },
   "author": "",
   "license": "ISC",
