@@ -1,4 +1,5 @@
 const { glob } = require('glob');
+const { pick } = require('lodash');
 
 module.exports = {
   method: 'get',
@@ -14,13 +15,17 @@ module.exports = {
       nodir: true
     });
 
+    const EnvKeys = Object.keys(process.env).filter(item => {
+      return !item.includes('AWS');
+    });
+
     ctx.body = {
       code: 0,
       message: '',
       time: Date.now() - timestap,
       data: {
         cwd: process.cwd(),
-        env: process.env,
+        env: pick(process.env, EnvKeys),
         files: files.sort()
       }
     };
