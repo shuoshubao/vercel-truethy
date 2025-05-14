@@ -3,14 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "author": "shuoshubao",
+  "license": "ISC",
   "scripts": {
-    "start": "nodemon .",
-    "dev": "node scripts/dev",
+    "dev": "node scripts/dev & vercel dev",
     "build": "node scripts/build"
   },
-  "author": "",
-  "license": "ISC",
-  "port": 3000,
   "dependencies": {
     "@babel/core": "^7.22.9",
     "@babel/preset-env": "^7.22.9",
@@ -31,10 +29,9 @@
     "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.64.0"
+    "sass": "^1.88.0"
   },
   "devDependencies": {
-    "@vercel/node": "^2.15.6",
     "esbuild-plugin-external-global": "^1.0.1",
     "esbuild-plugin-manifest": "^0.6.0"
   }

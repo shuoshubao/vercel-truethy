@@ -2,10 +2,9 @@ const path = require('path');
 const esbuild = require('esbuild');
 const { externalGlobalPlugin } = require('esbuild-plugin-external-global');
 const manifest = require('esbuild-plugin-manifest');
-const { port } = require('../package.json');
 require('./router');
 
-const PUBLIC_PATH = `http://localhost:${port}/`;
+const PUBLIC_PATH = '/';
 
 (async () => {
   const ctx = await esbuild.context({
