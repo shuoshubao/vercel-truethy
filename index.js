@@ -12,4 +12,4 @@ app.use(static('dist'));
 app.use(bodyParser());
 initRouter(app);
 
-app.listen(Number(port));
+app.listen(port);

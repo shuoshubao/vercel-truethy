@@ -7,7 +7,7 @@ module.exports = {
   args: {
     type: 'object',
     properties: {
-      packages: {
+      user: {
         type: 'string',
         description: '用户名',
         examples: ['shuoshubao']
