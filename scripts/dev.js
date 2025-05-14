@@ -18,7 +18,7 @@ const PUBLIC_PATH = '/';
         generate(entries) {
           return Object.entries(entries).reduce(
             (prev, [k, v]) => {
-              prev[path.parse(k).name] = `http://localhost:3000/${v}`;
+              prev[path.parse(k).name] = `/${v}`;
               return prev;
             },
             { publicPath: PUBLIC_PATH }
