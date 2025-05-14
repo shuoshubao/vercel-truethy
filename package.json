@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ."
+    "start": "nodemon .",
+    "dev": "node scripts/router && node scripts/dev",
+    "build": "node scripts/router && node scripts/build"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +22,7 @@
     "antd": "^5.7.3",
     "axios": "^1.4.0",
     "esbuild": "^0.18.15",
+    "fs-extra": "^11.3.0",
     "glob": "^10.3.3",
     "koa": "^2.14.2",
     "koa-static": "^5.0.0",
