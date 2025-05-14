@@ -7,7 +7,7 @@
   "license": "ISC",
   "scripts": {
     "dev": "node scripts/dev & vercel dev",
-    "build": "node scripts/build && vercel build"
+    "build": "node scripts/build"
   },
   "dependencies": {
     "@babel/core": "^7.22.9",
@@ -32,6 +32,7 @@
     "sass": "^1.88.0"
   },
   "devDependencies": {
+    "@vercel/node": "^5.1.16",
     "esbuild-plugin-external-global": "^1.0.1",
     "esbuild-plugin-manifest": "^0.6.0"
   }
