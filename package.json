@@ -1,8 +1,7 @@
 {
-  "name": "vercel-api",
+  "name": "vercel-truethy",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "vercel practice",
   "author": "shuoshubao",
   "license": "ISC",
   "scripts": {
