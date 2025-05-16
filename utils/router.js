@@ -1,13 +1,17 @@
+const { resolve, relative } = require('path');
+const os = require('os');
+const glob = require('glob');
 const Router = require('@koa/router');
 const { generateDocument } = require('@nbfe/js2html');
 const prettier = require('prettier');
 const { cloneDeep } = require('lodash');
 const getServerHtml = require('./ssr');
-const { publicPath: PUBLIC_PATH, index: IndexJs } = require('../dist/manifest.json');
-const { resolve, relative } = require('path');
-const glob = require('glob');
 
 const cwd = process.cwd();
+
+const isMac = os.platform() === 'darwin';
+
+const PUBLIC_PATH = isMac ? '' : `https://${process.env.VERCEL_URL}/`;
 
 const RouterFiles = glob.sync(resolve(cwd, 'api/**/*.js')).map(v => {
   return relative(cwd, v).replace('.js', '');
@@ -111,7 +115,7 @@ router.get('/', async (ctx, next) => {
     ],
     script: [
       {
-        src: IndexJs
+        src: 'index.js'
       }
     ],
     link: [

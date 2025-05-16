@@ -1,29 +1,15 @@
-const path = require('path');
 const esbuild = require('esbuild');
 const { externalGlobalPlugin } = require('esbuild-plugin-external-global');
-const manifest = require('esbuild-plugin-manifest');
 
-const PUBLIC_PATH = '/';
+console.time('esbuild build');
 
 esbuild.build({
   entryPoints: ['src/index.jsx'],
-  entryNames: '[name]-[hash]',
+  entryNames: '[name]',
   outdir: 'dist',
   bundle: true,
   minify: true,
   plugins: [
-    manifest({
-      shortNames: true,
-      generate(entries) {
-        return Object.entries(entries).reduce(
-          (prev, [k, v]) => {
-            prev[path.parse(k).name] = `/${v}`;
-            return prev;
-          },
-          { publicPath: PUBLIC_PATH }
-        );
-      }
-    }),
     externalGlobalPlugin({
       react: 'window.React',
       'react-dom': 'window.ReactDOM',
@@ -33,3 +19,5 @@ esbuild.build({
     })
   ]
 });
+
+console.timeEnd('esbuild build');

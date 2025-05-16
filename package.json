@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "@vercel/node": "^5.1.16",
-    "esbuild-plugin-external-global": "^1.0.1",
-    "esbuild-plugin-manifest": "^0.6.0"
+    "esbuild-plugin-external-global": "^1.0.1"
   }
 }
