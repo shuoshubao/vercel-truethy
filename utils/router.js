@@ -11,7 +11,7 @@ const cwd = process.cwd();
 
 const isMac = os.platform() === 'darwin';
 
-const PUBLIC_PATH = isMac ? '' : `https://${process.env.VERCEL_URL}/`;
+const PUBLIC_PATH = isMac ? '/' : `https://${process.env.VERCEL_URL}/`;
 
 const RouterFiles = glob.sync(resolve(cwd, 'api/**/*.js')).map(v => {
   return relative(cwd, v).replace('.js', '');
@@ -87,27 +87,57 @@ const RouterList = RouterFiles.map(v => {
   };
 });
 
+const getAliNpmCdnUrl = ({ name, version, path }) => {
+  return ['https://registry.npmmirror.com', name, version, 'files', path].join('/');
+};
+
 router.get('/', async (ctx, next) => {
   const ServerHtml = getServerHtml({ RouterList, PUBLIC_PATH });
 
   const html = generateDocument({
     title: 'Vercel',
-    style: ['https://unpkg.com/antd@4.24.12/dist/antd.min.css'],
+    style: [
+      getAliNpmCdnUrl({
+        name: 'antd',
+        version: '4.24.12',
+        path: 'dist/antd.min.css'
+      })
+    ],
     headScript: [
       {
-        src: 'https://unpkg.com/react@18.2.0/umd/react.production.min.js'
+        src: getAliNpmCdnUrl({
+          name: 'react',
+          version: '18.2.0',
+          path: `umd/${isMac ? 'react.development.js' : 'react.production.min.js'}`
+        })
       },
       {
-        src: 'https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js'
+        src: getAliNpmCdnUrl({
+          name: 'react-dom',
+          version: '18.2.0',
+          path: `umd/${isMac ? 'react-dom.development.js' : 'react-dom.production.min.js'}`
+        })
       },
       {
-        src: 'https://unpkg.com/moment@2.25.3/min/moment.min.js'
+        src: getAliNpmCdnUrl({
+          name: 'moment',
+          version: '2.25.3',
+          path: 'min/moment.min.js'
+        })
       },
       {
-        src: 'https://unpkg.com/antd@4.24.12/dist/antd.min.js'
+        src: getAliNpmCdnUrl({
+          name: 'antd',
+          version: '4.24.12',
+          path: 'dist/antd.min.js'
+        })
       },
       {
-        src: 'https://unpkg.com/lodash@4.17.21/lodash.min.js'
+        src: getAliNpmCdnUrl({
+          name: 'lodash',
+          version: '4.17.21',
+          path: 'lodash.min.js'
+        })
       },
       {
         text: `window.globalData = ${JSON.stringify({ RouterList, PUBLIC_PATH })}`
@@ -115,7 +145,7 @@ router.get('/', async (ctx, next) => {
     ],
     script: [
       {
-        src: 'index.js'
+        src: `${PUBLIC_PATH}index.js`
       }
     ],
     link: [
