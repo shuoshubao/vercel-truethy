@@ -2,7 +2,6 @@ const path = require('path');
 const esbuild = require('esbuild');
 const { externalGlobalPlugin } = require('esbuild-plugin-external-global');
 const manifest = require('esbuild-plugin-manifest');
-require('./router');
 
 const PUBLIC_PATH = '/';
 

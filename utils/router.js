@@ -4,7 +4,14 @@ const prettier = require('prettier');
 const { cloneDeep } = require('lodash');
 const getServerHtml = require('./ssr');
 const { publicPath: PUBLIC_PATH, index: IndexJs } = require('../dist/manifest.json');
-const RouterFiles = require('../dist/routerConfig.json');
+const { resolve, relative } = require('path');
+const glob = require('glob');
+
+const cwd = process.cwd();
+
+const RouterFiles = glob.sync(resolve(cwd, 'api/**/*.js')).map(v => {
+  return relative(cwd, v).replace('.js', '');
+});
 
 const router = new Router();
 
