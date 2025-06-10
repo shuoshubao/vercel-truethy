@@ -1,0 +1,33 @@
+{
+    "emmet.extensionsPath": ["vue"],
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "prettier.useEditorConfig": true,
+    "prettier.requireConfig": true,
+    "prettier.configPath": "prettier.config.js",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[less]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "eslint.enable": true,
+    "editor.copyWithSyntaxHighlighting": false,
+    "fileheader.customMade": {
+        "Author": "git config user.name",
+        "Date": "Do not edit",
+        "LastEditors": "git config user.name",
+        "LastEditTime": "Do not edit",
+        "Description": ""
+    },
+    "fileheader.cursorMode": {
+        "description": "",
+        "param": "",
+        "return": ""
+    },
+    "fileheader.configObj": {
+        "prohibitAutoAdd": ["html", "json", "md", "less", "sh"]
+    }
+}

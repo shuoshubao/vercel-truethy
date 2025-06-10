@@ -1,3 +1,4 @@
-```sh
-npm i -g vercel
-```
+## 调试
+
+- nodemon index
+- npm run dev

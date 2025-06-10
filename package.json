@@ -1,37 +1,35 @@
 {
-  "name": "vercel-truethy",
-  "version": "1.0.0",
-  "description": "vercel practice",
-  "author": "shuoshubao",
-  "license": "ISC",
-  "scripts": {
-    "dev": "node scripts/dev & vercel dev",
-    "build": "node scripts/build"
-  },
-  "dependencies": {
-    "@babel/core": "^7.22.9",
-    "@babel/preset-env": "^7.22.9",
-    "@babel/preset-react": "^7.22.5",
-    "@koa/bodyparser": "^5.0.0",
-    "@koa/cors": "^4.0.0",
-    "@koa/router": "^12.0.0",
-    "@nbfe/js2html": "^1.2.0",
-    "antd": "^5.7.3",
-    "axios": "^1.4.0",
-    "esbuild": "^0.18.15",
-    "fs-extra": "^11.3.0",
-    "glob": "^10.3.3",
-    "koa": "^2.14.2",
-    "koa-static": "^5.0.0",
-    "less": "^4.1.3",
-    "lodash": "^4.17.21",
-    "prettier": "^2.8.8",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sass": "^1.88.0"
-  },
-  "devDependencies": {
-    "@vercel/node": "^5.1.16",
-    "esbuild-plugin-external-global": "^1.0.1"
-  }
+    "name": "vercel-truethy",
+    "version": "1.0.0",
+    "description": "Nodejs",
+    "private": true,
+    "type": "module",
+    "author": "shuoshubao",
+    "license": "MIT",
+    "scripts": {
+        "start": "vercel dev",
+        "dev": "npx vite",
+        "build": "npx vite build",
+        "vercel-build": "npm run build"
+    },
+    "dependencies": {
+        "@koa/bodyparser": "^5.0.0",
+        "@koa/cors": "^4.0.0",
+        "@koa/router": "^12.0.0",
+        "antd": "^5.25.4",
+        "canvas": "^3.1.0",
+        "glob": "^11.0.2",
+        "koa": "^2.14.2",
+        "koa-static": "^5.0.0",
+        "md5": "^2.3.0",
+        "prettier": "^3.5.3",
+        "qrcode": "^1.5.4",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0",
+        "uuid": "^11.1.0"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^4.5.1",
+        "vite": "^6.3.5"
+    }
 }
