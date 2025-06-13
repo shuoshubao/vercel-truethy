@@ -1,4 +1,4 @@
 ## 调试
 
-- nodemon index
-- npm run dev
+-   nodemon index
+-   npm run dev
