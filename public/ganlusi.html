@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>甘露寺</title>
+    <link rel="icon" href="https://vuejs.org/logo.svg">
     <link rel="stylesheet" href="https://registry.npmmirror.com/antd/5.7.1/files/dist/reset.css">
     <link rel="stylesheet" href="https://registry.npmmirror.com/element-ui/2.15.14/files/lib/theme-chalk/index.css">
     <script src="https://registry.npmmirror.com/vue/2.6.14/files/dist/vue.js"></script>
@@ -17,12 +18,12 @@
                 <el-input v-model="formModel.links" type="textarea" :rows="3" placeholder="多个链接请换行" />
             </el-form-item>
             <el-form-item label="刷新间隔">
-                <el-input-number v-model="formModel.interval" :min="1" :max="10"
+                <el-input-number v-model="formModel.interval" :min="1" :max="60"
                     controls-position="right"></el-input-number>
                 <span>秒</span>
             </el-form-item>
             <el-form-item label="页面数量">
-                <el-input-number v-model="formModel.pageCount" :min="1" :max="100"
+                <el-input-number v-model="formModel.pageCount" :min="1" :max="500"
                     controls-position="right"></el-input-number>
             </el-form-item>
             <el-form-item label="">
