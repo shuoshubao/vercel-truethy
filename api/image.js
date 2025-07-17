@@ -2,10 +2,11 @@
  * @Author: shuoshubao
  * @Date: 2025-06-06 19:30:11
  * @LastEditors: shuoshubao
- * @LastEditTime: 2025-06-06 22:55:20
+ * @LastEditTime: 2025-07-17 19:09:57
  * @Description: 二维码
  */
 import { createCanvas, registerFont } from 'canvas';
+import md5 from 'md5';
 import path from 'path';
 import QRCode from 'qrcode';
 import { fileURLToPath } from 'url';
@@ -23,7 +24,7 @@ export const getQrcode = {
 
         const buffer = await QRCode.toBuffer(text, {
             margin: 1,
-            width: 200
+            100: 100
         });
 
         ctx.set('Content-Type', 'image/png');
@@ -85,5 +86,70 @@ export const getPlaceholder = {
         ctx.set('Content-Type', 'image/png');
 
         ctx.body = buffer;
+    }
+};
+
+const hashCode = token => {
+    var hash = 0;
+    if (token.length === 0) {
+        return hash;
+    }
+    for (let i = 0; i < token.length; i++) {
+        hash = (hash << 5) - hash + token.charCodeAt(i);
+        hash |= 0;
+    }
+    return hash;
+};
+
+const makeRandomAvatar = token => {
+    const pixelSize = 50;
+
+    const size = pixelSize * 5;
+
+    const canvas = createCanvas(size, size);
+    const ctx = canvas.getContext('2d');
+
+    canvas.height = size;
+    canvas.width = size;
+
+    const codes = token.split('').map(char => char.charCodeAt(0));
+
+    let r = 0;
+    let g = 0;
+    let b = 0;
+
+    for (let i = 0; i < codes.length; i++) {
+        r = (r + codes[i] * 1) % 256;
+        g = (g + codes[i] * 2) % 256;
+        b = (b + codes[i] * 3) % 256;
+    }
+
+    const hash = hashCode(token);
+
+    ctx.fillStyle = `rgb(${r} ${g}, ${b})`;
+
+    for (let i = 0; i < 15; ++i) {
+        const col = Math.floor(i / 5);
+        const row = i % 5;
+        const bit = (hash >> i) & 1;
+        if (bit) {
+            ctx.fillRect(col * pixelSize, row * pixelSize, pixelSize, pixelSize);
+            if (i < 10) {
+                ctx.fillRect((4 - col) * pixelSize, row * pixelSize, pixelSize, pixelSize);
+            }
+        }
+    }
+
+    return canvas.toBuffer('image/png');
+};
+
+// 生成头像
+export const getAvatar = {
+    url: '/api/avatar/:name',
+    method: 'get',
+    middleware: async ctx => {
+        const { name } = ctx.params;
+        ctx.set('Content-Type', 'image/png');
+        ctx.body = makeRandomAvatar(md5(name));
     }
 };
