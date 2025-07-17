@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>甘露寺</title>
+    <link rel="stylesheet" href="https://registry.npmmirror.com/antd/5.7.1/files/dist/reset.css">
+    <link rel="stylesheet" href="https://registry.npmmirror.com/element-ui/2.15.14/files/lib/theme-chalk/index.css">
+    <script src="https://registry.npmmirror.com/vue/2.6.14/files/dist/vue.js"></script>
+    <script src="https://registry.npmmirror.com/element-ui/2.15.14/files/lib/index.js"></script>
+</head>
+
+<body>
+    <div id="app" style="padding: 10px;">
+        <el-form :model="formModel" label-width="80px">
+            <el-form-item label="链接列表">
+                <el-input v-model="formModel.links" type="textarea" :rows="3" placeholder="多个链接请换行" />
+            </el-form-item>
+            <el-form-item label="刷新间隔">
+                <el-input-number v-model="formModel.interval" :min="1" :max="10"
+                    controls-position="right"></el-input-number>
+                <span>秒</span>
+            </el-form-item>
+            <el-form-item label="页面数量">
+                <el-input-number v-model="formModel.pageCount" :min="1" :max="100"
+                    controls-position="right"></el-input-number>
+            </el-form-item>
+            <el-form-item label="">
+                <el-button type="primary" @click="handleSubmit">开刷</el-button>
+            </el-form-item>
+        </el-form>
+        <div style="display: grid; gap: 10px; grid-template-columns: repeat(5, 1fr);">
+            <el-card v-for="item in links" :key="item.key" shadow="hover">
+                <iframe :src="item.href" frameborder="0"></iframe>
+            </el-card>
+        </div>
+    </div>
+</body>
+<script>
+    Vue.use(ELEMENT, { size: 'mini' });
+
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                formModel: {
+                    links: 'https://www.onerugged.com/\nhttps://www.emdoorrugged.com/',
+                    interval: 5,
+                    pageCount: 5
+                },
+                links: [],
+                timer: null
+            }
+        },
+        methods: {
+            handleSubmit() {
+                this.links = this.formModel.links.split('\n').map(item => item.trim()).filter(Boolean).map(item => {
+                    return Array(this.formModel.pageCount).fill(item)
+                }).flat().map(item => {
+                    return {
+                        href: item,
+                        key: String(Math.random()).slice(2)
+                    }
+                });
+                if (this.timer) {
+                    clearInterval(this.timer);
+                }
+                this.timer = setInterval(() => {
+                    this.links = [];
+                    setTimeout(() => {
+                        this.links = this.formModel.links.split('\n').map(item => item.trim()).filter(Boolean).map(item => {
+                            return Array(this.formModel.pageCount).fill(item)
+                        }).flat().map(item => {
+                            return {
+                                href: item,
+                                key: String(Math.random()).slice(2)
+                            }
+                        });
+                    }, 1e2)
+                }, this.formModel.interval * 1000);
+            }
+        }
+    })
+</script>
+
+</html>
